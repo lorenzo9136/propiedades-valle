@@ -26,6 +26,7 @@
     .glider img {
       max-width: 100%;
       border-radius: 10px;
+      cursor: pointer;
     }
 
     .glider-prev,
@@ -64,6 +65,44 @@
     .whatsapp:hover {
       background-color: #1ebe57;
     }
+
+    /* Lightbox con zoom */
+    #lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #lightbox-content {
+      max-width: 90%;
+      max-height: 90%;
+      overflow: hidden;
+      touch-action: none;
+      cursor: grab;
+    }
+
+    #lightbox img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      display: block;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @media (max-width: 600px) {
+      #lightbox-content {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -75,7 +114,7 @@
     <p><strong>Ubicación:</strong> Valle de Guadalupe</p>
     <p>Terreno plano de 1000 metros, ideal para cabañas.</p>
     <div style="display: flex; justify-content: center;">
-      <iframe src="https://www.google.com/maps/embed?...tu_mapa..." width="200" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      <iframe src="https://www.google.com/maps/embed?..." width="200" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
     <div class="glider-contain">
       <button class="glider-prev prev1">«</button>
@@ -97,7 +136,7 @@
     <p><strong>Ubicación:</strong> Vista panorámica</p>
     <p>1200 metros con hermosa vista.</p>
     <div style="display: flex; justify-content: center;">
-      <iframe src="https://www.google.com/maps/embed?...tu_mapa..." width="200" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      <iframe src="https://www.google.com/maps/embed?..." width="200" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
     <div class="glider-contain">
       <button class="glider-prev prev2">«</button>
@@ -118,7 +157,7 @@
     <p><strong>Ubicación:</strong> Ruta del Vino</p>
     <p>Perfecto para viñedo boutique.</p>
     <div style="display: flex; justify-content: center;">
-      <iframe src="https://www.google.com/maps/embed?...tu_mapa..." width="200" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      <iframe src="https://www.google.com/maps/embed?..." width="200" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
     <div class="glider-contain">
       <button class="glider-prev prev3">«</button>
@@ -139,7 +178,7 @@
     <p><strong>Ubicación:</strong> Colinas del Valle</p>
     <p>Con árboles nativos y acceso privado.</p>
     <div style="display: flex; justify-content: center;">
-      <iframe src="https://www.google.com/maps/embed?...tu_mapa..." width="200" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      <iframe src="https://www.google.com/maps/embed?..." width="200" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
     <div class="glider-contain">
       <button class="glider-prev prev4">«</button>
@@ -160,7 +199,7 @@
     <p><strong>Ubicación:</strong> Loma Alta</p>
     <p>Vista 360° al valle y mar.</p>
     <div style="display: flex; justify-content: center;">
-      <iframe src="https://www.google.com/maps/embed?...tu_mapa..." width="200" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      <iframe src="https://www.google.com/maps/embed?..." width="200" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
     <div class="glider-contain">
       <button class="glider-prev prev5">«</button>
@@ -174,8 +213,16 @@
     <a class="whatsapp" href="https://wa.me/526462728302?text=Estoy%20interesado%20en%20el%20terreno5">Contactar por WhatsApp</a>
   </div>
 
-  <!-- Glider JS -->
+  <!-- Lightbox con zoom -->
+  <div id="lightbox" onclick="closeLightbox(event)">
+    <div id="lightbox-content">
+      <img id="lightbox-img" src="" alt="Imagen ampliada" />
+    </div>
+  </div>
+
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@9.4.0/dist/panzoom.min.js"></script>
   <script>
     window.addEventListener('load', function () {
       for (let i = 1; i <= 5; i++) {
@@ -188,7 +235,32 @@
           }
         });
       }
+
+      document.querySelectorAll('.glider img').forEach(img => {
+        img.addEventListener('click', () => {
+          const lightboxImg = document.getElementById('lightbox-img');
+          lightboxImg.src = img.src;
+
+          const container = document.getElementById('lightbox-content');
+          if (container.panzoomInstance) {
+            container.panzoomInstance.destroy();
+          }
+
+          document.getElementById('lightbox').style.display = 'flex';
+          container.panzoomInstance = Panzoom(container, {
+            maxScale: 5,
+            minScale: 1,
+            contain: 'outside'
+          });
+        });
+      });
     });
+
+    function closeLightbox(event) {
+      if (event.target.id === 'lightbox' || event.target.id === 'lightbox-content') {
+        document.getElementById('lightbox').style.display = 'none';
+      }
+    }
   </script>
 </body>
 </html>
