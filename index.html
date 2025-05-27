@@ -2,67 +2,113 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Propiedades en Valle de Guadalupe</title>
+
+  <!-- Glider CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.css">
+
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
-      margin: 0;
+      max-width: 800px;
+      margin: auto;
       padding: 20px;
+      background-color: #f5f5f5;
     }
-    h1 {
-      text-align: center;
-      color: #333;
-    }
+
     .propiedad {
       background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      margin: 20px auto;
-      max-width: 700px;
-      overflow: hidden;
-    }
-    .propiedad img {
-      width: 100%;
-      height: auto;
-    }
-    .contenido {
+      border-radius: 12px;
       padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
-    .contenido h2 {
-      margin-top: 0;
-      color: #444;
+
+    .glider img {
+      max-width: 100%;
+      border-radius: 10px;
     }
-    .contenido p {
-      margin: 5px 0;
+
+    .glider-prev,
+    .glider-next {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 10px;
+      font-size: 20px;
+      border-radius: 50%;
+      cursor: pointer;
+      position: absolute;
+      top: 40%;
+      transform: translateY(-50%);
+      z-index: 1;
     }
+
+    .glider-prev { left: 5px; }
+    .glider-next { right: 5px; }
+
+    .glider-contain {
+      position: relative;
+      margin: 15px 0;
+    }
+
     .whatsapp {
       display: inline-block;
-      margin-top: 10px;
-      padding: 10px 15px;
-      background-color: #25D366;
+      margin-top: 15px;
+      background-color: #25d366;
       color: white;
+      padding: 10px 15px;
       text-decoration: none;
       border-radius: 5px;
+    }
+
+    .whatsapp:hover {
+      background-color: #1ebe57;
     }
   </style>
 </head>
 <body>
 
-  <h1>Propiedades en venta en Valle de Guadalupe</h1>
+  <div class="propiedad">
+    <h2>Terreno en El Porvenir</h2>
+    <p><strong>Precio:</strong> $1,800,000 MXN</p>
+    <p><strong>Ubicación:</strong> El Porvenir, Valle de Guadalupe</p>
+    <p>Terreno plano de 2 hectáreas, ideal para viñedo o cabañas.</p>
 
-<div class="propiedad">
-  <img src="muestra.jpg" alt="Foto de la propiedad" />
+    <!-- Carrusel de imágenes -->
+    <div class="glider-contain">
+      <button class="glider-prev">«</button>
+      <div class="glider">
+        <img src="https://via.placeholder.com/700x400?text=Vista+1" alt="Vista 1">
+        <img src="https://via.placeholder.com/700x400?text=Vista+2" alt="Vista 2">
+        <img src="https://via.placeholder.com/700x400?text=Vista+3" alt="Vista 3">
+      </div>
+      <button class="glider-next">»</button>
+      <div role="tablist" class="dots"></div>
+    </div>
 
-  <div class="contenido">
-    <h2>Lote de 1000 metros cuadrados</h2>
-    <p><strong>Precio:</strong> $50,000.00 USD</p>
-    <p><strong>Ubicación:</strong> Centrico Valle de Guadalupe</p>
-    <p>1000 metros cuadrados en el corazon del Valle.</p>
-    <a class="whatsapp" href="https://wa.me/526462728302?text=Estoy%20interesado%20en%20la%20propiedad%20de%20mil%20metros">Contactar por WhatsApp</a>
+    <a class="whatsapp" href="https://wa.me/521XXXXXXXXXX?text=Estoy%20interesado%20en%20el%20terreno">Contactar por WhatsApp</a>
   </div>
-</div>
+
+  <!-- Glider JS -->
+  <script src="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.js"></script>
+  <script>
+    window.addEventListener('load', function(){
+      new Glider(document.querySelector('.glider'), {
+        slidesToShow: 1,
+        dots: '.dots',
+        arrows: {
+          prev: '.glider-prev',
+          next: '.glider-next'
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
+
 <div class="mapa">
   <iframe 
     <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3059.412421086031!2d-116.60502532436601!3d32.07571847396453!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzLCsDA0JzMyLjYiTiAxMTbCsDM2JzA4LjgiVw!5e1!3m2!1ses-419!2smx!4v1748370822541!5m2!1ses-419!2smx" width="300" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
